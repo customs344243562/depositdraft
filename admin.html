@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>EGCA</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="EGCA" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <link rel="canonical" href="https://egca.msamy.tk/" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/ios/512.png">
+  <link rel="android-chrome-192x192" type="image/png" sizes="192x192" href="android/android-launchericon-192-192.png">
+  <link rel="android-chrome-512x512" type="image/png" sizes="512x512" href="android/android-launchericon-512-512.png">
+  <link rel="favicon-16x16" type="image/png" sizes="16x16" href="ios/16.png">
+  <link rel="favicon-32x32" type="image/png" sizes="16x16" href="ios/32.png">
+  <meta name="pwa-capable" content="yes">
+  <link rel="stylesheet" href="cropper.css">
+  <script src="js/pocketbase.umd.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+	      .label {
+      cursor: pointer;
+    }
+
+    .progress {
+      display: none;
+      margin-bottom: 1rem;
+    }
+
+    .alert {
+      display: none;
+    }
+
+    .img-container img {
+      max-width: 100%;
+    }
+
+details summary::after {
+    float: left;
+}
+#modal{
+	    max-width: 500px;
+    overflow: scroll;
+        text-align: -webkit-center;
+}
+.croppmer-container {
+	    max-width: 500px;
+    overflow: hidden;
+}
+.img-container{
+	max-width: 350px;
+	max-width: 350px;
+	width: 300px;
+}
+.modal-body{
+text-align: -webkit-center;
+}
+.modal-content{
+    max-width: 500px;
+
+}
+.cropper-crop-box{
+    width: 200px;
+    height: 200px;	
+}
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+.rounded {
+    border-radius: 50%;
+}
+.cropper-view-box, .cropper-face {
+    border-radius: 50%;
+}
+
+  </style>
+</head>
+
+<body class="body">
+    <div x-data="lists" class="container">
+      <nav>
+        <ul>
+          <li>
+            <h1 @click="selectedList = null" style="margin:0; text-align: center; cursor: pointer">EGCA</h1>
+          </li>
+        </ul>
+        <ul>
+          <li><i x-show="!showLogin" @click="logout()" class="bx bx-log-out bx-md" style="cursor: pointer"></i></li>
+        </ul>
+      </nav>
+
+      <!-- login / signup -->
+      <article x-show="showLogin" x-transition>
+        <h2 style="direction: rtl;font-family: arial;">تسجيل دخول</h2>
+
+        <label style="direction: rtl;" for="username">اسم المستخدم</label>
+        <input style="direction: rtl;" x-model="username" type="username" id="username" placeholder="رقم الحاسب">
+
+        <label style="direction: rtl;" for="password">كلمة المرور</label>
+        <input style="direction: rtl;" x-model="password" type="password" id="password">
+
+        <button style="direction: rtl;" @click="login()" class="contrast outline" aria-busy="false" id="loginbutton">تسجيل دخول</button>
+
+        <label style="direction: rtl;"><mark x-show="loginMessage" x-text="loginMessage"></mark></label>
+
+      </article>
+
+      <!-- show data -->
+      <article x-show="!showLogin && !selectedList" x-transition style="margin-top: 10%;">
+		<details open>
+		  <summary style="direction: rtl;font-family: arial;font-size: x-large;color: black;">البيانات الاساسية</summary>
+			<article x-show="!gettinginfodone" aria-busy="true"></article>
+				<article x-show="gettinginfodone" >
+					<label style="direction: rtl;"><mark x-show="gettinginfoMessage" x-text="gettinginfoMessage"></mark></label>
+					  <div style="justify-content: space-between">
+							<div x-show="!firstlogin" style="justify-content: space-between">
+								<label style="direction: rtl;">الصورة الشخصية
+								<div class="container" style="width: 200px;">
+									<label class="label" data-toggle="tooltip" title="">
+									  <img class="rounded" id="avatar" src="Blank-Avatar.jpeg" alt="avatar" style="margin-top: 20px;margin-bottom: 20px;background: transparent url(Blank-Avatar.jpeg) no-repeat scroll center center;">
+									  <input type="file" class="sr-only" id="input" name="image" accept="image/*">
+									</label>
+									</div>
+								</label>
+								<div class="alert" role="alert"></div>
+							</div>
+						<div class="grid" style="direction: rtl;">
+							<label style="direction: rtl;">الأسم<input id="userinfo_name" type="text" x-model="userdata.name" style="direction: rtl;"></label>
+							<label style="direction: rtl;">النوع<select id= "gender" x-model="userdata.gender" style="direction: rtl;" >
+								  <option value="" selected></option>
+								  <option value="male" selected>&nbsp;&nbsp; ذكر</option>
+								  <option value="female" selected>&nbsp;&nbsp; انثى</option>
+								</select></label>
+							<label style="direction: rtl; text-align-last: end;">تاريخ الميلاد<input  x-model="userdata.birthdate" style="direction: rtl;" type="date" id="date" name="date"></label>
+						</div>
+						<div class="grid"  style="direction: rtl;">
+							<label style="direction: rtl;">تليفون<input type="number" x-model="userdata.phone" style="direction: rtl;"></label>
+							<label style="direction: rtl;">الايميل<input type="text" x-model="userdata.email" style="direction: rtl;"></label>
+							<label style="direction: rtl;">العنوان<input type="text" x-model="userdata.address" style="direction: rtl;"></label>
+						</div>
+					  </div>
+				</article>			
+		</details>
+				<label style="direction: rtl;"><mark x-show="updateinfoMessage" x-text="updateinfoMessage"></mark></label>
+				<button @click="updateinfo()" class="contrast outline" aria-busy="false" id="updateinfobutton">حفظ</button>
+		</article>
+    </div>
+
+    
+    
+
+   
+
+
+<!-- Modal -->
+<dialog class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+          </div>
+          <div class="modal-body">
+            <div class="img-container">
+              <img id="image" src="Blank-Avatar.jpeg">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="crop" style="margin: 10px;">Crop</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" style="margin: 10px;">Cancel</button>
+          </div>
+        </div>
+      </div>
+</dialog>
+
+
+   <script src="https://unpkg.com/jquery@3/dist/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="js/cropper.js"></script>
+
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('lists', () => ({
+          // pocketbase client
+          client: null,
+
+          // login / signup
+          showLogin: false,
+          username: null,
+          password: null,
+          passwordConfirm: null,
+          loginMessage: null,
+          signupMessage: null,
+		  updateinfoMessage: null,
+		  firstlogin: false,
+		  selectedList: null,
+		  gettinginfoMessage:null,
+		  gettinginfodone:false,
+          // user data
+          userdata: [],
+		  
+          async init () {
+            // initialize pocketbase
+            this.client = new PocketBase('https://egca.msamy.tk');
+
+            // capture invalid token
+            this.client.afterSend = function (response, data) {
+              if (response.status === 401) {
+                this.showLogin = true
+              }
+
+              return data
+            }
+
+            // if user is not logged in, show login / signup page
+            if (!window.localStorage.getItem('pocketbase_auth')) {
+              this.showLogin = true
+              return
+            }
+
+            // resume session
+            const auth = JSON.parse(window.localStorage.getItem('pocketbase_auth'))
+            this.client.authStore.save(auth.token, auth.model)
+
+            // fetch todo lists
+            this.getInfo()
+
+            // suscribe to live update events
+            this.subscribeToLists()
+          },
+
+          // login
+          async login () {
+            try {
+				//loader(true)
+				document.getElementById("loginbutton").setAttribute("aria-busy", "true");
+				document.getElementById("loginbutton").disabled = true;
+
+              const user = await this.client.collection('egca_users').authWithPassword(this.username, this.password)
+              this.userdata.id = user.record.id
+              	document.getElementById("loginbutton").setAttribute("aria-busy", "false");
+				document.getElementById("loginbutton").disabled = false;
+              if (this.client.authStore.baseModel.verified == false) {
+					this.loginMessage = "لم يتم تفعيل الحساب بعد!"
+					this.client.authStore.clear()
+					return
+				  };
+			  this.updateinfoMessage=null
+              this.getInfo()
+              this.subscribeToLists()
+              
+              this.showLogin = false
+              
+              this.username = ''
+              this.password = ''
+              this.passwordConfirm = ''
+             // loader(false)
+            } catch (err) {
+              this.loginMessage = "خطأ في رقم الحاسب او كلمة المرور"
+              	document.getElementById("loginbutton").setAttribute("aria-busy", "false");
+				document.getElementById("loginbutton").disabled = false;
+            }
+          },
+
+          // signup
+          async signup () {
+            try {
+				document.getElementById("signupbutton").setAttribute("aria-busy", "true");
+				document.getElementById("signupbutton").disabled = true;
+              const user = await this.client.collection('egca_users').create({
+                username: this.username,
+                password: this.password,
+                passwordConfirm: this.passwordConfirm
+              })
+              	document.getElementById("signupbutton").setAttribute("aria-busy", "false");
+				document.getElementById("signupbutton").disabled = false;
+              this.email = ''
+              this.password = ''
+              this.passwordConfirm = ''
+              this.signupMessage = 'تم التسجيل بنجاح! الرجاء الانتظار لتفعيل الحساب'
+            } catch (err) {
+              this.signupMessage='حدث خطأ اثناء تسجيل الحساب. الرجاء التأكد انك من المفوض لهم باستخدام التطبيق ومن استخدام كلمة مرور مكونة من 7 عناصر او اكثر وتطابق كلمات المرور.'
+              	document.getElementById("signupbutton").setAttribute("aria-busy", "false");
+				document.getElementById("signupbutton").disabled = false;
+            }
+          },
+          
+          //update info
+          
+          async updateinfo() {
+			  this.updateinfoMessage=null
+			  try {
+					document.getElementById("updateinfobutton").setAttribute("aria-busy", "true");
+					document.getElementById("updateinfobutton").disabled = true;
+					const data = {
+						"id": this.client.authStore.baseModel.id,
+						"name": this.userdata.name,
+						"userid": this.client.authStore.baseModel.id,
+						"gender": document.getElementById("gender").value,
+						"phone": this.userdata.phone,
+						"address": this.userdata.address,
+						"email": this.userdata.email,
+						"birthdate" : this.userdata.birthdate
+					};
+					//console.log(data)
+					if ( this.firstlogin == true ) {
+						const record = await this.client.collection('egca_user_info').create(data);
+						this.firstlogin = false
+						this.gettinginfoMessage=null
+					} else {
+						const record = await this.client.collection('egca_user_info').update(this.client.authStore.baseModel.id, data);
+					}
+					document.getElementById("updateinfobutton").setAttribute("aria-busy", "false");
+					document.getElementById("updateinfobutton").disabled = false;
+					this.updateinfoMessage = 'تم حفظ البيانات بنجاح'
+			  } catch (err) {
+				    this.updateinfoMessage = err.data.message
+					document.getElementById("updateinfobutton").setAttribute("aria-busy", "false");
+					document.getElementById("updateinfobutton").disabled = false;
+			  }
+			  
+		  },
+		  
+          // logout
+          async logout () {
+			  console.log(this.userdata)
+			this.userdata={}
+            this.client.authStore.clear()
+            
+            this.showLogin = true
+          },
+
+          // lists functions
+          async subscribeToLists () {
+            this.client.collection('egca_user_info').subscribe(this.client.authStore.baseModel.id, e => {
+				this.userdata=e.record
+				this.userdata.birthdate = this.userdata.birthdate.split(" ")[0]
+            })
+          },
+
+          async getInfo () {
+			  this.gettinginfodone=false
+			  try {
+				const userdata = await this.client.collection('egca_user_info').getOne(this.client.authStore.baseModel.id)
+				this.userdata=userdata
+				this.userdata.birthdate = this.userdata.birthdate.split(" ")[0]
+				if (this.userdata.profilepic!=""){
+					document.getElementById("avatar").src="api/files/mgdrckl1uywmktj/".concat(userdata.id).concat("/").concat(userdata.profilepic)
+				}
+				this.firstlogin = false
+				this.gettinginfoMessage=null
+				
+			} catch (err) {
+				switch (err.data.code){
+					case 404:
+						this.gettinginfoMessage="لا يوجد بيانات لك الرجاء تسجيل البيانات"
+						this.firstlogin = true
+				}
+			}
+			this.gettinginfodone=true
+          },
+        }))
+      })
+
+    </script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function () {
+      var avatar = document.getElementById('avatar');
+      var image = document.getElementById('image');
+      var input = document.getElementById('input');
+      var $progress = $('.progress');
+      var $progressBar = $('.progress-bar');
+      var $alert = $('.alert');
+      var $modal = $('#modal');
+      var cropper;
+
+      $('[data-toggle="tooltip"]').tooltip();
+
+      input.addEventListener('change', function (e) {
+        var files = e.target.files;
+        var done = function (url) {
+          input.value = '';
+          image.src = url;
+          $alert.hide();
+          $modal.modal('show');
+        };
+        var reader;
+        var file;
+        var url;
+
+        if (files && files.length > 0) {
+          file = files[0];
+
+          if (URL) {
+            done(URL.createObjectURL(file));
+          } else if (FileReader) {
+            reader = new FileReader();
+            reader.onload = function (e) {
+              done(reader.result);
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      });
+
+      $modal.on('shown.bs.modal', function () {
+        cropper = new Cropper(image, {
+          aspectRatio: 1,
+          viewMode: 3,
+        });
+      }).on('hidden.bs.modal', function () {
+        cropper.destroy();
+        cropper = null;
+      });
+
+      document.getElementById('crop').addEventListener('click', function () {
+        var initialAvatarURL;
+        var canvas;
+
+        $modal.modal('hide');
+
+        if (cropper) {
+          canvas = cropper.getCroppedCanvas({
+            width: 200,
+            height: 200,
+          });
+          initialAvatarURL = avatar.src;
+          avatar.src = canvas.toDataURL();
+          $progress.show();
+          $alert.removeClass('alert-success alert-warning');
+          canvas.toBlob(async function (blob) {
+            var formData = new FormData();
+            this.client = new PocketBase('https://egca.msamy.tk');
+            const auth = JSON.parse(window.localStorage.getItem('pocketbase_auth'))
+            this.client.authStore.save(auth.token, auth.model)
+            formData.append('profilepic', blob, "profilepic.jpeg");
+            formData.append('id', this.client.authStore.baseModel.id);
+            const record = await this.client.collection('egca_user_info').update(this.client.authStore.baseModel.id, formData);
+            return
+         },"image/jpeg");
+        }
+      });
+    });
+  </script>
+</body>
+</html>

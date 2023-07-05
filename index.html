@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <title>مسودة الوديعة</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="مسودة الوديعة" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <link rel="canonical" href="https://depositdraft.msamy.tk/" />
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="theme-color" content="#efefef" />
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link rel="icon" href="favicon.png" type="image/x-icon">
+  <link rel="apple-touch-icon" href="/ios/512.png">
+  <link rel="android-chrome-192x192" type="image/png" sizes="192x192" href="android/android-launchericon-192-192.png">
+  <link rel="android-chrome-512x512" type="image/png" sizes="512x512" href="android/android-launchericon-512-512.png">
+  <link rel="favicon-16x16" type="image/png" sizes="16x16" href="ios/16.png">
+  <link rel="favicon-32x32" type="image/png" sizes="16x16" href="ios/32.png">
+  <meta name="pwa-capable" content="yes">
+  <script>html=document.querySelector('html');metatheme=document.querySelector('meta[name="theme-color"]');darkmode=JSON.parse(localStorage.getItem('darkmode'));if(darkmode){metatheme.setAttribute('content',  '#3c4d5a');html.setAttribute('data-theme','dark')}</script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <style>
+	[data-theme=dark] {
+		--backgroundcolor: #3c4d5a;
+		--numbercolor: #f3faff;
+	} 
+	[data-theme=light] {
+		--backgroundcolor: #efefef;
+		--numbercolor: var(--numbercolor);
+	}
+	@media (min-width:900px) {
+		html {
+			max-width: 500px;
+			margin-left: 50%;
+			transform: translate(-50%, 0%);
+			zoom: 75%;
+		}
+	}
+	body {
+	  overscroll-behavior-y: contain;
+	}
+	.label {
+      cursor: pointer;
+    }
+
+    .progress {
+      display: none;
+      margin-bottom: 1rem;
+    }
+    .alert {
+      display: none;
+    }
+
+    .img-container img {
+      max-width: 100%;
+    }
+
+	details summary::after {
+		float: left;
+	}
+	#modal{
+			max-width: 500px;
+		overflow: scroll;
+			text-align: -webkit-center;
+	}
+	.croppmer-container {
+			max-width: 500px;
+		overflow: hidden;
+	}
+	.img-container{
+		max-width: 350px;
+		max-width: 350px;
+		width: 300px;
+	}
+	.modal-body{
+	text-align: -webkit-center;
+	}
+	.modal-content{
+		max-width: 500px;
+
+	}
+	.cropper-crop-box{
+		width: 200px;
+		height: 200px;	
+	}
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0,0,0,0);
+		white-space: nowrap;
+		border: 0;
+	}
+	.rounded {
+		border-radius: 50%;
+	}
+	.cropper-view-box, .cropper-face {
+		border-radius: 50%;
+	}
+	:root{
+		--block-spacing-vertical: calc(var(--spacing) * 1.5);	
+	}
+	section {
+		--block-spacing-vertical: calc(var(--spacing) * 2);
+	}
+	.mm-ocd--open {
+		background: rgba(0,0,0,0);
+	}
+	select:not([multiple],[size]) {
+		background-image: none;
+		appearance: auto;
+	}
+	.textheader {
+		background: var(--backgroundcolor);
+		padding-top: 10px;
+		padding-bottom: 10px;
+		text-align: center;
+	}
+	.redcircle {
+		font-weight: bold;
+		background: #ffefef;
+		border-radius: 100%;
+		text-align: center;
+		color: black;
+	}
+  </style>
+</head>
+
+<body class="body" x-data="lists">
+    <main  class="container-fluid">
+		<header>
+		  <nav style="
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    transition: none;
+    /* right: auto; */
+    /* padding-left: 0px; */
+    top: 0px;
+    padding: px;
+    background: var(--backgroundcolor);
+">
+			<ul style="
+    padding-right: var(--spacing);
+">
+			  <li><i></i></li>
+			</ul>
+
+			<ul>
+			  <li style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">
+				<h4 style="margin:0; text-align: center; white-space: nowrap;" x-text="title">مسودة الوديعة</h4>
+			  </li>
+			</ul>
+		<ul style="padding-top: 0px;padding-bottom: 0px;">
+			<li style="padding-top: 0px;padding-bottom: 0px;">
+				<h5 x-show="GoBack" style="margin:0; margin-right: 20px;text-align: center; cursor: pointer;font-weight: normal;" @click="GoBack=null;window.scrollTo({top: 0}); show = 'menu'; title='مسودة الوديعة';add={};">رجوع</h5>
+			</li>
+		</ul>
+		  </nav>
+		</header>
+<section style="padding-top: 50px;">
+	<div x-show="show=='menu'" style="direction: rtl;">
+				<article x-show='OngoingShift == false' @click="ShiftStart()" style="cursor: pointer;text-align-last: center;">
+					<i class='bx  bxs-door-open bx-md'></i>
+					<h4>بدء الوردية</h4>
+				</article>
+				<div x-show='OngoingShift == true'  class="grid" style="grid-template-columns:repeat(auto-fit,minmax(0%,1fr))">
+					<article @click="window.scrollTo({top: 0});show = 'add';title='إضافة مشمول';GoBack=true" style="cursor: pointer;text-align-last: center;">
+						<i class='bx bx-plus bx-md'></i>
+						<h4 style="margin-bottom: 0px;">تخزين</h4>
+					</article>
+					<article @click="window.scrollTo({top: 0});show = 'remove';title='صرف مشمول';GoBack=true" style="cursor: pointer;text-align-last: center;">
+						<i class='bx bx-minus bx-md'></i>
+						<h4 style="margin-bottom: 0px;">صرف</h4>
+					</article>
+				</div>
+				<div x-show='OngoingShift == true'  class="grid" style="grid-template-columns:repeat(auto-fit,minmax(0%,1fr))">
+					<article @click="window.scrollTo({top: 0});show = 'moveitem';title='نقل مشمول';GoBack=true" style="cursor: pointer;text-align-last: center;" class="contrast outline">
+						<i class='bx bx-cube bx-md'></i> 
+						<h4 style="margin-bottom: 0px;">نقل</h4>
+					</article>
+					<article @click="window.scrollTo({top: 0});show = 'edit';title='عرض/تعديل';GoBack=true" style="cursor: pointer;text-align-last: center;">
+						<i class='bx bx-edit bx-md'></i> 
+						<h4 style="margin-bottom: 0px;">عرض/تعديل</h4>
+					</article>
+				</div>
+				<div x-show='OngoingShift == true' class="grid" style="grid-template-columns:repeat(auto-fit,minmax(0%,1fr))">
+					<article @click="window.scrollTo({top: 0});show = 'inventorystart';title='جرد أول الوردية';GoBack=true" style="cursor: pointer;text-align-last: center;" class="contrast outline">
+						<i class='bx bx-book-content bx-md'></i>
+						<h4 style="margin-bottom: 0px;">جرد أول</h4>
+					</article>
+					<article @click="window.scrollTo({top: 0});show = 'inventoryend';title='جرد آخر الوردية';GoBack=true" style="cursor: pointer;text-align-last: center;" class="contrast outline">
+						<i class='bx bx-book-content bx-md'></i>
+						<h4 style="margin-bottom: 0px;">جرد آخر</h4>
+					</article>
+				</div>
+				<div x-show='OngoingShift == true' class="grid" style="grid-template-columns:repeat(auto-fit,minmax(0%,1fr))">
+					<article @click="window.scrollTo({top: 0});show = 'settings';title='إعدادات';GoBack=true" style="cursor: pointer;text-align-last: center;" class="contrast outline">
+						<i class='bx bx-cog bx-md' ></i>
+						<h4 style="margin-bottom: 0px;">إعدادت</h4>
+					</article>
+					<article @click="window.scrollTo({top: 0});show = 'endshiftpage';title='إنهاء الوردية';GoBack=true" style="cursor: pointer;text-align-last: center;" class="contrast outline">
+						<i class='bx bx-door-open bx-md'></i>
+						<h4 style="margin-bottom: 0px;">إنهاء الوردية</h4>
+					</article>
+				</div>
+
+	</div>
+	<div x-show="show=='endshiftpage'" style="direction: rtl;">
+				<h3 style="text-align: center;margin-top: revert;">هل أنت متأكد من إنهاء الوردية وحذف كل البيانات؟</h3>
+				<div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(0%,1fr))">
+					<button @click="ShiftEnd ();" style="text-align-last: center;" class="contrast outline">نعم</button>
+					<button @click="GoBack=null;window.scrollTo({top: 0}); show = 'menu'; title='مسودة الوديعة'" style="text-align-last: center;" class="contrast outline">لا</button>
+				</div>
+	</div>
+	<div x-show="show=='add'" style="direction: rtl;--font-size: 1.2em;">
+		<table style="white-space: nowrap;">
+		  <tbody>
+			<tr style="height: 5em;">
+			  <td><label style="direction: rtl;">النوع</label></td>
+			  <td>
+				<select @change="add_type_change()" style="text-align-last: center;margin-bottom: 0px;" x-model="add.type">
+				<option value="" disabled selected>اختر النوع</option>
+				<option value='وديعة'>وديعة</option>
+				<option value='محجوزات'>محجوزات</option>
+				<option value='متروكات'>متروكات</option>
+				<option value='مضبوطات'>مضبوطات</option>
+				<option value='وارد جهات'>وارد جهات</option>
+				<option value='متخلف'>متخلف</option>
+				</select>
+			</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">مسلسل</label>
+				</td>
+				<td>
+					<input type="number" x-model.number="add.serial" style="margin-bottom: 0px;direction: rtl;text-align: center;" placeholder="أدخل مسلسل">
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">مكان التخزين</label>
+				</td>
+				<td>
+					<select x-model="add.place" style="text-align-last: center;margin-bottom: 0px;">
+						<option value="" disabled selected>اختر المكان</option>
+						<template x-for="place in placesarray">
+							<option x-text="place.name" x-model="place.name"></option>
+						</template>
+					</select>
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td colspan="2">
+					<mark x-show="Message" x-text="Message"></mark>
+					<button @click="AddItem_ToAddedItems()" class="contrast outline" style='margin-bottom: 0px;margin-top: 10px;'>إضافة</button>
+				</td>
+			</tr>
+		  </tbody>
+		</table>
+	</div>
+	<div x-show="show=='remove'" style="direction: rtl;--font-size: 1.2em;">
+		<table style="white-space: nowrap;">
+		  <tbody>
+			<tr style="height: 5em;">
+			  <td><label style="direction: rtl;">النوع</label></td>
+			  <td>
+				<select style="text-align-last: center;margin-bottom: 0px;" x-model="add.type">
+				<option value="" disabled selected>اختر النوع</option>
+				<option value='وديعة'>وديعة</option>
+				<option value='محجوزات'>محجوزات</option>
+				<option value='متروكات'>متروكات</option>
+				<option value='مضبوطات'>مضبوطات</option>
+				<option value='وارد جهات'>وارد جهات</option>
+				<option value='متخلف'>متخلف</option>
+				</select>
+			</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">مسلسل</label>
+				</td>
+				<td>
+					<input type="number" x-model.number="add.serial" style="margin-bottom: 0px;direction: rtl;text-align: center;" placeholder="أدخل مسلسل">
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">مكان التخزين</label>
+				</td>
+				<td>
+					<select x-model="add.place" style="text-align-last: center;margin-bottom: 0px;">
+						<option value="" disabled selected>اختر المكان</option>
+						<template x-for="place in placesarray">
+							<option x-text="place.name" x-model="place.name"></option>
+						</template>
+					</select>
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td colspan="2">
+					<mark x-show="Message" x-text="Message"></mark>
+					<button @click="AddItem_ToRemovedItems(add.type,add.serial,add.place)" class="contrast outline" style='margin-bottom: 0px;margin-top: 10px;'>صرف</button>
+				</td>
+			</tr>
+		  </tbody>
+		</table>
+	</div>  
+	<div x-show="show=='edit'"   style="direction: rtl;">
+		<h4  class="textheader" x-text="'تم تخزين '+localstorage.addeditems.length+' مشمول'"></h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <thead>
+			<tr>
+			  <th scope="col">				
+				<select x-model="addedfilter" style="padding-left: 0px;padding-right: 5px;margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;appearance: auto;border: none;">
+					<option value="وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف" selected>الكل</option>
+					<option value='وديعة'>وديعة</option>
+					<option value='محجوزات'>محجوزات</option>
+					<option value='متروكات'>متروكات</option>
+					<option value='مضبوطات'>مضبوطات</option>
+					<option value='وارد جهات'>وارد جهات</option>
+					<option value='متخلف'>متخلف</option>
+			    </select>
+			  </th>
+			  <th scope="col">م</th>
+			  <th scope="col" style="white-space: nowrap;">مكان التخزين</th>
+			  <th scope="col"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<template x-for="item in localstorage.addeditems">
+			<tr x-show='addedfilter.includes(item.type)'>
+			  <td x-text="item.type"></td>
+			  <td x-text="item.serial" style='text-align-last: center;'></td>
+			  <td x-text="item.place"></td>
+			  <td><i @click="RemoveItem_FromAddedItems(item.serial,item.type,item.place)" class="bx bx-trash bx-xs" style="text-align: end; cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		<h4  class="textheader" x-text="'تم صرف '+localstorage.removeditems.length+' مشمول'"></h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <thead>
+			<tr>
+			  <th scope="col">				
+				<select x-model="removedfilter" style="padding-left: 0px;padding-right: 5px;margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;appearance: auto;border: none;">
+					<option value="وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف" selected>الكل</option>
+					<option value='وديعة'>وديعة</option>
+					<option value='محجوزات'>محجوزات</option>
+					<option value='متروكات'>متروكات</option>
+					<option value='مضبوطات'>مضبوطات</option>
+					<option value='وارد جهات'>وارد جهات</option>
+					<option value='متخلف'>متخلف</option>
+			    </select>
+			  </th>
+			  <th scope="col">م</th>
+			  <th scope="col" style="white-space: nowrap;">مكان التخزين</th>
+			  <th scope="col"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<template x-for="item in localstorage.removeditems">
+			<tr x-show='removedfilter.includes(item.type)'>
+			  <td x-text="item.type"></td>
+			  <td x-text="item.serial" style='text-align-last: center;'></td>
+			  <td x-text="item.place"></td>
+			  <td><i @click="RemoveItem_FromRemovedItems(item.serial,item.type,item.place)" class="bx bx-trash bx-xs" style="text-align: end; cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		<h4  class="textheader" x-text="'تم نقل '+localstorage.moveditems.length+' مشمول'"></h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <thead>
+			<tr>
+			  <th scope="col">				
+				<select x-model="movedfilter" style="padding-left: 0px;padding-right: 5px;margin-bottom: 0px;padding-top: 0px;padding-bottom: 0px;appearance: auto;border: none;">
+					<option value="وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف" selected>الكل</option>
+					<option value='وديعة'>وديعة</option>
+					<option value='محجوزات'>محجوزات</option>
+					<option value='متروكات'>متروكات</option>
+					<option value='مضبوطات'>مضبوطات</option>
+					<option value='وارد جهات'>وارد جهات</option>
+					<option value='متخلف'>متخلف</option>
+			    </select>
+			  </th>
+			  <th scope="col">م</th>
+			  <th scope="col">من</th>
+			  <th scope="col" style="white-space: nowrap;">الى</th>
+			  <th scope="col"></th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<template x-for="item in localstorage.moveditems">
+			<tr x-show='movedfilter.includes(item.type)'>
+			  <td x-text="item.type"></td>
+			  <td x-text="item.serial" style='text-align-last: center;'></td>
+			  <td x-text="item.placeold"></td>
+			  <td x-text="item.placenew"></td>
+			  <td><i @click="RemoveMovedItem(item.type,item.serial,item.placeold,item.placenew)" class="bx bx-trash bx-xs" style="text-align: end; cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+	</div>
+	<div x-show="show=='moveitem'" style="direction: rtl;">
+		<table style="white-space: nowrap;margin-bottom: 0px;">
+		  <tbody>
+			<tr style="height: 5em;">
+			  <td><label style="direction: rtl;">النوع</label></td>
+			  <td>
+				<i style="display: none;" class='bx bxs-right-arrow bx-sm' @click="el=document.getElementById('select01');x=el.selectedIndex;if(x>0){el.selectedIndex--}"></i><select style="text-align-last: center;margin-bottom: 0px;" x-model="add.type" id="select01">
+				<option value="" disabled selected>اختر النوع</option>
+				<option value='وديعة'>وديعة</option>
+				<option value='محجوزات'>محجوزات</option>
+				<option value='متروكات'>متروكات</option>
+				<option value='مضبوطات'>مضبوطات</option>
+				<option value='وارد جهات'>وارد جهات</option>
+				<option value='متخلف'>متخلف</option>
+				</select>
+				<i style="display: none;" class='bx bxs-left-arrow bx-sm' @click="document.getElementById('select01').selectedIndex++"></i>
+			</td>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">مسلسل</label>
+				</td>
+				<td>
+					<input type="number" x-model.number="add.serial" style="margin-bottom: 0px;direction: rtl;text-align: center;" placeholder="أدخل مسلسل">
+				</td>
+			</tr>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">من</label>
+				</td>
+				<td>
+					<select id="select02" x-model="add.placeold" style="text-align-last: center;margin-bottom: 0px;">
+						<option value="" disabled selected>اختر المكان</option>
+						<template x-for="place in placesarray">
+							<option x-text="place.name" x-model="place.name"></option>
+						</template>
+					</select>
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">إلى</label>
+				</td>
+				<td>
+					<select id="select02" x-model="add.placenew" style="text-align-last: center;margin-bottom: 0px;">
+						<option value="" disabled selected>اختر المكان</option>
+						<template x-for="place in placesarray">
+							<option x-text="place.name" x-model="place.name"></option>
+						</template>
+					</select>
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td colspan="2" style="border-bottom: none">
+					<mark x-show="Message" x-text="Message"></mark>
+					<button @click="AddMovedItem(add.type,add.serial,add.placeold,add.placenew)" class="contrast outline" style='margin-bottom: 0px;margin-top: 10px;'>نقل</button>
+				</td>
+			</tr>
+		  </tbody>
+		</table>
+	</div>
+	<div x-show="show=='inventorystart'" style="direction: rtl;">
+		<article><details open>
+			<summary>إضافة رصيد</summary>
+		<table style="white-space: nowrap;margin-bottom: 0px;">
+		  <tbody>
+			<tr style="height: 5em;">
+			  <td><label style="direction: rtl;">النوع</label></td>
+			  <td>
+				<i style="display: none;" class='bx bxs-right-arrow bx-sm' @click="el=document.getElementById('select01');x=el.selectedIndex;if(x>0){el.selectedIndex--}"></i><select style="text-align-last: center;margin-bottom: 0px;" x-model="add.type" id="select01">
+				<option value="" disabled selected>اختر النوع</option>
+				<option value='وديعة'>وديعة</option>
+				<option value='محجوزات'>محجوزات</option>
+				<option value='متروكات'>متروكات</option>
+				<option value='مضبوطات'>مضبوطات</option>
+				<option value='وارد جهات'>وارد جهات</option>
+				<option value='متخلف'>متخلف</option>
+				</select>
+				<i style="display: none;" class='bx bxs-left-arrow bx-sm' @click="document.getElementById('select01').selectedIndex++"></i>
+			</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">مكان التخزين</label>
+				</td>
+				<td>
+					<select id="select02" x-model="add.place" style="text-align-last: center;margin-bottom: 0px;">
+						<option value="" disabled selected>اختر المكان</option>
+						<template x-for="place in placesarray">
+							<option x-text="place.name" x-model="place.name"></option>
+						</template>
+					</select>
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td>
+					<label style="direction: rtl;">الرصيد</label>
+				</td>
+				<td>
+					<input type="number" x-model.number="add.serial" style="margin-bottom: 0px;direction: rtl;text-align: center;" placeholder="أدخل الرصيد">
+				</td>
+			</tr>
+			<tr style="height: 5em;">
+				<td colspan="2" style="border-bottom: none">
+					<mark x-show="Message" x-text="Message"></mark>
+					<button @click="AddInventoryBalance(add.type,add.place,add.serial)" class="contrast outline" style='margin-bottom: 0px;margin-top: 10px;'>إضافة</button>
+				</td>
+			</tr>
+		  </tbody>
+		</table>
+		</details></article>	
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">أرصدة أول</h4>
+		<figure>
+		<table style="text-wrap: nowrap;width: 90%;" class="container">
+		  <thead>
+			<tr>
+			  <th scope="col">  </th>
+			  <th scope="col">  </th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			  <td>وديعة</td>
+			  <td x-text="localstorage.balances.start.wadea" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>محجوزات</td>
+			  <td x-text="localstorage.balances.start.mahgozat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>متروكات</td>
+			  <td x-text="localstorage.balances.start.matrokat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>مضبوطات</td>
+			  <td x-text="localstorage.balances.start.madbotat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>وارد جهات</td>
+			  <td x-text="localstorage.balances.start.waredgehat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>متخلف</td>
+			  <td x-text="localstorage.balances.start.motakhalaf" style='text-align-last: start;'></td>
+			</tr>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">وديعة</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventorynotzero.wadea">
+			<tr>
+			  <td x-text="item.place"></td>
+			  <td x-text="item.startbalance"></td>
+			  <td style="text-align: end;"><i @click="RemoveInventoryBalance(item.type,item.place,item.startbalance)" class="bx bx-trash bx-xs" style="cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td scope="col" x-text="localstorage.balances.start.wadea"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">محجوزات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventorynotzero.mahgozat">
+			<tr>
+			  <td x-text="item.place"></td>
+			  <td x-text="item.startbalance"></td>
+			  <td style="text-align: end;"><i @click="RemoveInventoryBalance(item.type,item.place,item.startbalance)" class="bx bx-trash bx-xs" style="cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td scope="col" x-text="localstorage.balances.start.mahgozat"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">متروكات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventorynotzero.matrokat">
+			<tr>
+			  <td x-text="item.place"></td>
+			  <td x-text="item.startbalance"></td>
+			  <td style="text-align: end;"><i @click="RemoveInventoryBalance(item.type,item.place,item.startbalance)" class="bx bx-trash bx-xs" style="cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td scope="col" x-text="localstorage.balances.start.matrokat"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">مضبوطات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventorynotzero.madbotat">
+			<tr>
+			  <td x-text="item.place"></td>
+			  <td x-text="item.startbalance"></td>
+			  <td style="text-align: end;"><i @click="RemoveInventoryBalance(item.type,item.place,item.startbalance)" class="bx bx-trash bx-xs" style="cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td scope="col" x-text="localstorage.balances.start.madbotat"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+
+		<h4 class="textheader" style="margin-bottom: 0px;">وارد جهات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventorynotzero.waredgehat">
+			<tr>
+			  <td x-text="item.place"></td>
+			  <td x-text="item.startbalance"></td>
+			  <td style="text-align: end;"><i @click="RemoveInventoryBalance(item.type,item.place,item.startbalance)" class="bx bx-trash bx-xs" style="cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td scope="col" x-text="localstorage.balances.start.waredgehat"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		<h4 class="textheader" style="margin-bottom: 0px;">متخلف</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventorynotzero.motakhalaf">
+			<tr>
+			  <td x-text="item.place"></td>
+			  <td x-text="item.startbalance"></td>
+			  <td style="text-align: end;"><i @click="RemoveInventoryBalance(item.type,item.place,item.startbalance)" class="bx bx-trash bx-xs" style="cursor: pointer"></i></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td scope="col" x-text="localstorage.balances.start.motakhalaf"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+	</div>
+	<div x-show="show=='inventoryend'" style="direction: rtl;">
+		<h4 class="textheader" style="margin-bottom: 0px;">أرصدة آخر</h4>
+		<figure>
+		<table style="text-wrap: nowrap;width: 90%;" class="container">
+		  <thead>
+			<tr>
+			  <th scope="col"></th>
+			  <th scope="col">أول</th>
+			  <th scope="col"></th>
+			  <th scope="col"></th>
+			  <th scope="col">آخر</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			<tr>
+			  <td>وديعة</td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.wadea" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="addedlength.wadea > 0 ? '+'+addedlength.wadea : ''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="removedlength.wadea > 0 ? '-'+removedlength.wadea :''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.wadea+addedlength.wadea-removedlength.wadea" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>محجوزات</td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.mahgozat" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="addedlength.mahgozat > 0 ? '+'+addedlength.mahgozat : ''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="removedlength.mahgozat > 0 ? '-'+removedlength.mahgozat :''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.mahgozat+addedlength.mahgozat-removedlength.mahgozat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>متروكات</td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.matrokat" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="addedlength.matrokat > 0 ? '+'+addedlength.matrokat : ''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="removedlength.matrokat > 0 ? '-'+removedlength.matrokat :''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.matrokat+addedlength.matrokat-removedlength.matrokat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>مضبوطات</td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.madbotat" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="addedlength.madbotat > 0 ? '+'+addedlength.madbotat : ''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="removedlength.madbotat > 0 ? '-'+removedlength.madbotat :''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.madbotat+addedlength.madbotat-removedlength.madbotat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>وارد جهات</td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.waredgehat" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="addedlength.waredgehat > 0 ? '+'+addedlength.waredgehat : ''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="removedlength.waredgehat > 0 ? '-'+removedlength.waredgehat :''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.waredgehat+addedlength.waredgehat-removedlength.waredgehat" style='text-align-last: start;'></td>
+			</tr>
+			<tr>
+			  <td>متخلف</td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.motakhalaf" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="addedlength.motakhalaf > 0 ? '+'+addedlength.motakhalaf : ''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-weight: bold;"x-text="removedlength.motakhalaf > 0 ? '-'+removedlength.motakhalaf :''" style='text-align-last: start;'></td>
+			  <td style="color: var(--numbercolor);font-size: large;" x-text="localstorage.balances.start.motakhalaf+addedlength.motakhalaf-removedlength.motakhalaf" style='text-align-last: start;'></td>
+			</tr>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			  <td scope="col"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">وديعة</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+<!--
+		  <thead>
+			<tr>
+			  <th scope="col"></th>
+			  <th scope="col">أول</th>
+			  <th scope="col"></th>
+			  <th scope="col"></th>
+			  <th scope="col">آخر</th>
+			</tr>
+		  </thead>
+-->
+		  <tbody>
+			<template x-for="item in inventory.wadea">
+			<tr>
+				<td x-text="item.place"></td>
+				<td x-text="item.startbalance" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.added > 0 ? '+'+item.added : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.removed > 0 ? '-'+item.removed : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-show="item.moved > 0" x-text="item.moved > 0 ? '+'+item.moved : ''" :class="item.moved > 0 ? 'redcircle' : ''"></td>
+				<td x-show="item.moved < 0" x-text="item.moved" :class="item.moved < 0 ? 'redcircle' : ''"></td>
+				<td colspan="2" x-text="item.startbalance + item.added - item.removed + item.moved" style="color: var(--numbercolor);text-align: end;"></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td colspan="6" style="text-align: end;font-size: large;" scope="col" x-text="localstorage.balances.start.wadea+localstorage.addeditems.filter(item => item.type === 'وديعة').length-localstorage.removeditems.filter(item => item.type === 'وديعة').length"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">محجوزات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventory.mahgozat">
+			<tr>
+				<td x-text="item.place"></td>
+				<td x-text="item.startbalance" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.added > 0 ? '+'+item.added : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.removed > 0 ? '-'+item.removed : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-show="item.moved > 0" x-text="item.moved > 0 ? '+'+item.moved : ''" :class="item.moved > 0 ? 'redcircle' : ''"></td>
+				<td x-show="item.moved < 0" x-text="item.moved" :class="item.moved < 0 ? 'redcircle' : ''"></td>
+				<td colspan="2" x-text="item.startbalance + item.added - item.removed + item.moved" style="color: var(--numbercolor);text-align: end;"></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td colspan="6" style="text-align: end;font-size: large;" scope="col" x-text="localstorage.balances.start.mahgozat + localstorage.addeditems.filter(item => item.type === 'محجوزات').length - localstorage.removeditems.filter(item => item.type === 'محجوزات').length"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">متروكات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventory.matrokat">
+			<tr>
+				<td x-text="item.place"></td>
+				<td x-text="item.startbalance" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.added > 0 ? '+'+item.added : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.removed > 0 ? '-'+item.removed : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-show="item.moved > 0" x-text="item.moved > 0 ? '+'+item.moved : ''" :class="item.moved > 0 ? 'redcircle' : ''"></td>
+				<td x-show="item.moved < 0" x-text="item.moved" :class="item.moved < 0 ? 'redcircle' : ''"></td>
+				<td colspan="2" x-text="item.startbalance + item.added - item.removed + item.moved" style="color: var(--numbercolor);text-align: end;"></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td colspan="6" style="text-align: end;font-size: large;" scope="col" x-text="localstorage.balances.start.matrokat + localstorage.addeditems.filter(item => item.type === 'متروكات').length - localstorage.removeditems.filter(item => item.type === 'متروكات').length"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		
+		<h4 class="textheader" style="margin-bottom: 0px;">مضبوطات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventory.madbotat">
+			<tr>
+				<td x-text="item.place"></td>
+				<td x-text="item.startbalance" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.added > 0 ? '+'+item.added : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.removed > 0 ? '-'+item.removed : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-show="item.moved > 0" x-text="item.moved > 0 ? '+'+item.moved : ''" :class="item.moved > 0 ? 'redcircle' : ''"></td>
+				<td x-show="item.moved < 0" x-text="item.moved" :class="item.moved < 0 ? 'redcircle' : ''"></td>
+				<td colspan="2" x-text="item.startbalance + item.added - item.removed + item.moved" style="color: var(--numbercolor);text-align: end;"></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td colspan="6" style="text-align: end;font-size: large;" scope="col" x-text="localstorage.balances.start.madbotat + localstorage.addeditems.filter(item => item.type === 'مضبوطات').length - localstorage.removeditems.filter(item => item.type === 'مضبوطات').length"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+
+		<h4 class="textheader" style="margin-bottom: 0px;">وارد جهات</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventory.waredgehat">
+			<tr>
+				<td x-text="item.place"></td>
+				<td x-text="item.startbalance" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.added > 0 ? '+'+item.added : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.removed > 0 ? '-'+item.removed : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-show="item.moved > 0" x-text="item.moved > 0 ? '+'+item.moved : ''" :class="item.moved > 0 ? 'redcircle' : ''"></td>
+				<td x-show="item.moved < 0" x-text="item.moved" :class="item.moved < 0 ? 'redcircle' : ''"></td>
+				<td colspan="2" x-text="item.startbalance + item.added - item.removed + item.moved" style="color: var(--numbercolor);text-align: end;"></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td colspan="6" style="text-align: end;font-size: large;" scope="col" x-text="localstorage.balances.start.waredgehat + localstorage.addeditems.filter(item => item.type === 'وارد جهات').length - localstorage.removeditems.filter(item => item.type === 'وارد جهات').length"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+		<h4 class="textheader" style="margin-bottom: 0px;">متخلف</h4>
+		<figure>
+		<table style="text-wrap: nowrap;">
+		  <tbody>
+			<template x-for="item in inventory.motakhalaf">
+			<tr>
+				<td x-text="item.place"></td>
+				<td x-text="item.startbalance" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.added > 0 ? '+'+item.added : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-text="item.removed > 0 ? '-'+item.removed : ''" style="color: var(--numbercolor);font-weight: bold;"></td>
+				<td x-show="item.moved > 0" x-text="item.moved > 0 ? '+'+item.moved : ''" :class="item.moved > 0 ? 'redcircle' : ''"></td>
+				<td x-show="item.moved < 0" x-text="item.moved" :class="item.moved < 0 ? 'redcircle' : ''"></td>
+				<td colspan="2" x-text="item.startbalance + item.added - item.removed + item.moved" style="color: var(--numbercolor);text-align: end;"></td>
+			</tr>
+			</template>
+		  </tbody>
+		  <tfoot>
+			<tr>
+			  <td scope="col" style="white-space: nowrap;">الإجمالي</td>
+			  <td colspan="6" style="text-align: end;font-size: large;" scope="col" x-text="localstorage.balances.start.motakhalaf + localstorage.addeditems.filter(item => item.type === 'متخلف').length - localstorage.removeditems.filter(item => item.type === 'متخلف').length"></td>
+			</tr>
+		  </tfoot>
+		</table>
+		</figure>
+	</div>
+	<div x-show="show=='settings'" style="direction: rtl;">
+		<table style="white-space: nowrap;">
+		  <tbody>
+			<tr style="height: 5em;">
+			  <td>
+				<fieldset>
+				  <h5 style="font-weight: normal;">
+					<input type="checkbox" x-model="darkmode" @change="toggledarkmode()" :checked="darkmode">الوضع المظلم</input>
+				  </h5>
+				</fieldset>
+			</td>
+			</tr>
+		  </tbody>
+		</table>
+	</div>
+</section>
+		
+    </main>
+	<footer style="font-size: small;color: darkgray;text-align-last: center">
+		<hr style="margin: 1rem;"></hr>
+		<label>نسخة تجريبية</label>
+		<label>© Mohamed Samy - 2023</label>
+	</footer>
+  <script src="https://unpkg.com/jquery@3/dist/jquery.min.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/bootstrap@4/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('lists', () => ({
+          show: 'menu',
+          title: 'مسودة الوديعة',
+		  add: {},
+		  localstorage: {balances:{start:{}},inventory:[],addeditems:[],removeditems:[],moveditems:[]},
+		  inventory: {},
+		  inventorynotzero:{},
+		  addedlength: {},
+		  removedlength: {},
+		  removedfilter: "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف",
+		  addedfilter: "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف",
+		  balancesfilter: "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف",
+		  movedfilter: "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف",
+		  placesarray: [{ order:1,name:"رف 1"},{ order:2,name:"رف 2"},{ order:3,name:"رف 3"},{ order:4,name:"رف 4"},{ order:5,name:"رف 5"},{ order:6,name:"رف 6"},{ order:7,name:"رف 7"},{ order:8,name:"رف 8"},{ order:9,name:"رف 9"},{ order:10,name:"رف 10"},{ order:11,name:"رف 11"},{ order:12,name:"رف 12"},{ order:13,name:"رف 13"},{ order:14,name:"رف 14"},{ order:15,name:"رف 15"},{ order:16,name:"رف 16"},{ order:17,name:"دولاب الثمين"},{ order:18,name:"خزينة 1"},{ order:19,name:"خزينة 2"},{ order:20,name:"أسلحة"},{ order:21,name:"ارضي"},{ order:22,name:"مخزن مضبوطات"},{ order:23,name:"مهمل"}],
+		  GoBack: null,
+		  OngoingShift: null,
+		  Message: null,
+		  darkmode: false,
+		  Messagetimeout: 1500,
+          async init () {
+				if (localStorage.hasOwnProperty('darkmode')){this.darkmode=JSON.parse(localStorage.getItem('darkmode'))}
+				if (localStorage.hasOwnProperty('localstorage')) 
+				{
+					this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+					this.refreshvars ()
+					this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+					this.OngoingShift = true
+				}
+				else
+				{
+					this.OngoingShift = false
+				}
+          },
+          toggledarkmode(){
+			html=document.querySelector('html')
+			metatheme=document.querySelector('meta[name="theme-color"]')
+			if(this.darkmode){
+				metatheme.setAttribute('content',  '#3c4d5a');
+				html.setAttribute('data-theme','dark')
+				}
+			else{
+				metatheme.setAttribute('content',  '#efefef');
+				html.setAttribute('data-theme','light')
+				};
+			localStorage.setItem('darkmode',this.darkmode);
+		  },
+          refreshvars () {
+				this.inventory.wadea=this.localstorage.inventory.filter(item => item.type === 'وديعة')
+				this.inventory.mahgozat=this.localstorage.inventory.filter(item => item.type === 'محجوزات')
+				this.inventory.matrokat=this.localstorage.inventory.filter(item => item.type === 'متروكات')
+				this.inventory.madbotat=this.localstorage.inventory.filter(item => item.type === 'مضبوطات')
+				this.inventory.waredgehat=this.localstorage.inventory.filter(item => item.type === 'وارد جهات')
+				this.inventory.motakhalaf=this.localstorage.inventory.filter(item => item.type === 'متخلف')
+				
+				this.inventorynotzero.wadea=this.localstorage.inventory.filter(item => item.type === 'وديعة' && item.startbalance !== 0)
+				this.inventorynotzero.mahgozat=this.localstorage.inventory.filter(item => item.type === 'محجوزات' && item.startbalance !== 0)
+				this.inventorynotzero.matrokat=this.localstorage.inventory.filter(item => item.type === 'متروكات' && item.startbalance !== 0)
+				this.inventorynotzero.madbotat=this.localstorage.inventory.filter(item => item.type === 'مضبوطات' && item.startbalance !== 0)
+				this.inventorynotzero.waredgehat=this.localstorage.inventory.filter(item => item.type === 'وارد جهات' && item.startbalance !== 0)
+				this.inventorynotzero.motakhalaf=this.localstorage.inventory.filter(item => item.type === 'متخلف' && item.startbalance !== 0)
+				
+				this.addedlength.wadea=this.localstorage.addeditems.filter(item => item.type === 'وديعة').length
+				this.addedlength.mahgozat=this.localstorage.addeditems.filter(item => item.type === 'محجوزات').length
+				this.addedlength.matrokat=this.localstorage.addeditems.filter(item => item.type === 'متروكات').length
+				this.addedlength.madbotat=this.localstorage.addeditems.filter(item => item.type === 'مضبوطات').length
+				this.addedlength.waredgehat=this.localstorage.addeditems.filter(item => item.type === 'وارد جهات').length
+				this.addedlength.motakhalaf=this.localstorage.addeditems.filter(item => item.type === 'متخلف').length
+				
+				this.removedlength.wadea=this.localstorage.removeditems.filter(item => item.type === 'وديعة').length
+				this.removedlength.mahgozat=this.localstorage.removeditems.filter(item => item.type === 'محجوزات').length
+				this.removedlength.matrokat=this.localstorage.removeditems.filter(item => item.type === 'متروكات').length
+				this.removedlength.madbotat=this.localstorage.removeditems.filter(item => item.type === 'مضبوطات').length
+				this.removedlength.waredgehat=this.localstorage.removeditems.filter(item => item.type === 'وارد جهات').length
+				this.removedlength.motakhalaf=this.localstorage.removeditems.filter(item => item.type === 'متخلف').length
+		  },
+		  async ShiftStart () {
+				window.scrollTo({top: 0});
+				this.localstorage= {balances:{start:{wadea: 0, mahgozat: 0, matrokat: 0, madbotat: 0, waredgehat: 0, motakhalaf: 0}},inventory:[],addeditems:[],removeditems:[],moveditems:[]}
+				this.inventory= {}
+				this.inventorynotzero={}
+				this.addedlength= {wadea: 0, mahgozat: 0, matrokat: 0, madbotat: 0, waredgehat: 0, motakhalaf: 0}
+				this.removedlength= {wadea: 0, mahgozat: 0, matrokat: 0, madbotat: 0, waredgehat: 0, motakhalaf: 0}
+				this.add={}
+				localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+				this.OngoingShift=true
+				window.scrollTo({top: 0});
+				this.show='menu'
+				this.title='مسودة الوديعة'
+				this.GoBack=null
+		  },
+		  async ShiftEnd () {
+				window.scrollTo({top: 0})
+				this.darkmode=JSON.parse(localStorage.getItem('darkmode'))
+				localStorage.clear();  
+				localStorage.setItem('darkmode',this.darkmode);
+				this.show='menu'
+				this.title='مسودة الوديعة'
+				this.localstorage= {balances:{start:{wadea: 0, mahgozat: 0, matrokat: 0, madbotat: 0, waredgehat: 0, motakhalaf: 0}},inventory:[],addeditems:[],removeditems:[],moveditems:[]}
+				this.inventory= {}
+				this.inventorynotzero={}
+				this.addedlength= {wadea: 0, mahgozat: 0, matrokat: 0, madbotat: 0, waredgehat: 0, motakhalaf: 0}
+				this.removedlength= {wadea: 0, mahgozat: 0, matrokat: 0, madbotat: 0, waredgehat: 0, motakhalaf: 0}
+				this.add={}
+				this.removedfilter= "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف"
+				this.addedfilter= "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف"
+				this.balancesfilter= "وديعة محجوزات  متروكات مضبوطات وارد جهات متخلف"
+				this.GoBack=null;
+				this.OngoingShift=false	
+		  },
+		  async add_type_change() {
+				try {
+					this.add.serial=this.localstorage.addeditems.find(item => item.type === this.add.type).serial + 1
+				}
+				catch {
+					this.add.serial=null
+				}
+		  },
+		  AddItem_ToAddedItems() {
+				try {
+					if ( this.add.type==null || this.add.serial==null || this.add.place==null ){						
+						throw new Error('error');
+					}
+					if (this.localstorage.addeditems.filter(item => item.type === this.add.type && item.serial === this.add.serial).length > 0 ) {
+						throw new Error('error');
+					}
+					//add to localstorage.addeditems
+					this.localstorage.addeditems.unshift({
+						"type": this.add.type,
+						"serial": this.add.serial,
+						"place": this.add.place
+					});
+					//add to place balance localstorage.inventory
+					if (this.localstorage.inventory.filter(item => item.type === this.add.type && item.place=== this.add.place).length < 1 ) {
+						this.add.order=this.placesarray.find(place => place.name === this.add.place).order
+						this.AddtoInventory(this.add.type,this.add.place,this.add.order,0,1,0,0)
+					} else {
+						this.localstorage.inventory.find(item => item.type === this.add.type && item.place=== this.add.place).added += 1
+					}
+					//save to localstorage
+					localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+					this.Message="تم الإضافة بنجاح"
+					this.add.serial=null
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+					this.refreshvars ()
+					this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+				}
+				catch {
+					this.Message="حدث خطأ الرجاء مراجعة البيانات"
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+				}
+		  },
+		 AddItem_ToRemovedItems(type,number,place) {
+				try {
+					if ( this.add.type==null || this.add.serial==null || this.add.place==null ){						
+						throw new Error('error');
+					}
+					if (this.localstorage.removeditems.filter(item => item.type === this.add.type && item.serial === this.add.serial).length > 0 ) {
+						throw new Error('error');
+					}
+					//add to localstorage.addeditems
+					this.localstorage.removeditems.unshift({
+						"type": this.add.type,
+						"serial": this.add.serial,
+						"place": this.add.place
+					});
+					//add to place balance localstorage.inventory
+					if (this.localstorage.inventory.filter(item => item.type === this.add.type && item.place=== this.add.place).length < 1 ) {
+						this.add.order=this.placesarray.find(place => place.name === this.add.place).order
+						this.AddtoInventory(this.add.type,this.add.place,this.add.order,0,0,1,0)
+					} else {
+						this.localstorage.inventory.find(item => item.type === this.add.type && item.place=== this.add.place).removed += 1
+					}
+					//save to localstorage
+					localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+					this.refreshvars ()
+					this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+					this.Message="تم الصرف بنجاح"
+					this.add.serial=null
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+					
+				}
+				catch {
+					this.Message="حدث خطأ الرجاء مراجعة البيانات"
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+				}
+		  },
+		 RemoveItem_FromAddedItems(serial,type,place) {
+				//delete from localstorage.addeditems 
+				objWithIdIndex = this.localstorage.addeditems.findIndex((obj) => obj.serial === serial && obj.type === type && obj.place === place);
+				if (objWithIdIndex > -1) {
+					this.localstorage.addeditems.splice(objWithIdIndex, 1);
+				}
+				//remove from place balance localstorage.inventory
+				this.localstorage.inventory.find(item => item.type === type && item.place=== place).added -= 1	
+				objWithIdIndex = this.localstorage.inventory.findIndex((obj) => obj.startbalance === 0 && obj.added === 0 && obj.removed === 0 && obj.moved === 0);
+				if (objWithIdIndex > -1) {
+					this.localstorage.inventory.splice(objWithIdIndex, 1);
+				}
+				//save to localstorage
+				localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+				this.refreshvars ()
+				this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+		 },
+		 RemoveItem_FromRemovedItems(serial,type,place) {
+				//delete from localstorage.addeditems 
+				objWithIdIndex = this.localstorage.removeditems.findIndex((obj) => obj.serial === serial && obj.type === type && obj.place === place);
+				if (objWithIdIndex > -1) {
+					this.localstorage.removeditems.splice(objWithIdIndex, 1);
+				}
+				//remove from place balance localstorage.inventory
+				this.localstorage.inventory.find(item => item.type === type && item.place=== place).removed -= 1	
+				objWithIdIndex = this.localstorage.inventory.findIndex((obj) => obj.startbalance === 0 && obj.added === 0 && obj.removed === 0 && obj.moved === 0);
+				if (objWithIdIndex > -1) {
+					this.localstorage.inventory.splice(objWithIdIndex, 1);
+				}
+				//save to localstorage
+				localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+				this.refreshvars ()
+				this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+		 },
+		 AddInventoryBalance (type,placename,balance){
+				try {
+					if ( this.add.type==null || this.add.serial==null || this.add.place==null ){						
+						throw new Error('Parameter is not a number!');
+					}
+					//add to localstorage.inventory
+					typeEN=this.typeENfunc(this.add.type)
+					order=this.placesarray.find(place => place.name === this.add.place).order
+					if (this.localstorage.inventory.filter(item => item.type === this.add.type && item.place=== this.add.place).length == 0 ) {
+						this.AddtoInventory(this.add.type,this.add.place,order,this.add.serial,0,0,0)
+					}else{
+						this.localstorage.inventory.find(item => item.type === this.add.type && item.place=== this.add.place).startbalance=this.add.serial
+					}
+					//save to localStorage
+					//refresh balance
+					filteredarray=Alpine.raw(this.localstorage.inventory).filter(item => item.type === this.add.type)
+					TotalBalance=0
+					for (item in filteredarray){
+						TotalBalance += filteredarray[item].startbalance
+					}
+					typeEN=this.typeENfunc(this.add.type)
+					eval('this.localstorage.balances.start.'+typeEN + '= TotalBalance')
+					localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+					this.refreshvars ()
+					this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+					
+					//message
+					this.Message="تم الإضافة بنجاح"
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+					
+					//select next place
+					this.add={}
+					this.add.type=type
+					this.add.place=this.placesarray.find(place => place.order === order+1).name
+					
+				}
+				catch {
+					this.Message="حدث خطأ الرجاء مراجعة البيانات"
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+				}
+		 },
+		 RemoveInventoryBalance(type,place,balance){
+				//remove balance
+				const objWithIdIndex = this.localstorage.inventory.findIndex((obj) => obj.type === type && obj.place === place && obj.startbalance === balance);
+				if (objWithIdIndex > -1) {
+					this.localstorage.inventory.splice(objWithIdIndex, 1);					
+				}
+				//refresh balance
+				filteredarray=Alpine.raw(this.localstorage.inventory).filter(item => item.type === type)
+				TotalBalance=0
+				for (item in filteredarray){
+					TotalBalance += filteredarray[item].startbalance
+				}
+				typeEN=this.typeENfunc(type)
+				eval('this.localstorage.balances.start.'+typeEN + '= TotalBalance')
+				localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+				this.refreshvars ()
+				this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+		 },
+		AddMovedItem(type,serial,placeold,placenew) {
+				try {
+					if ( type==null || serial==null || placeold==null || placenew==null || placenew == placeold){						
+						throw new Error('error');
+					}
+					if (this.localstorage.moveditems.filter(item => item.type === type && item.serial === serial).length > 0 ) {
+						throw new Error('error');
+					}
+					//add to localstorage.moveditems
+					this.localstorage.moveditems.unshift({
+						"type": type,
+						"serial": serial,
+						"placeold": placeold,
+						"placenew": placenew
+					});
+					//add to placenew balance localstorage.inventory
+					if (this.localstorage.inventory.filter(item => item.type === type && item.place=== placenew).length < 1 ) {
+						this.add.order=this.placesarray.find(place => place.name === placenew).order
+						this.AddtoInventory(type,placenew,this.add.order,0,0,0,1)
+					} else {
+						this.localstorage.inventory.find(item => item.type === type && item.place=== placenew).moved += 1
+					}
+					//remove from placeold balance localstorage.inventory
+					if (this.localstorage.inventory.filter(item => item.type === type && item.place=== placeold).length < 1 ) {
+						this.add.order=this.placesarray.find(place => place.name === placeold).order
+						this.AddtoInventory(type,placeold,this.add.order,0,0,0,-1)
+					} else {
+						this.localstorage.inventory.find(item => item.type === type && item.place=== placeold).moved -= 1
+					}
+					//save to localstorage
+					localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+					this.refreshvars ()
+					this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+					this.Message="تم تسجيل النقل بنجاح"
+					this.add.serial=null
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+					
+				}
+				catch {
+					this.Message="حدث خطأ الرجاء مراجعة البيانات"
+					setTimeout(() => this.Message = null, this.Messagetimeout)
+				}
+		},
+		RemoveMovedItem(type,serial,placeold,placenew){
+				//delete from localstorage.moveditems 
+				objWithIdIndex = this.localstorage.moveditems.findIndex((obj) => obj.serial === serial && obj.type === type && obj.placeold === placeold && obj.placenew === placenew);
+				if (objWithIdIndex > -1) {
+					this.localstorage.moveditems.splice(objWithIdIndex, 1);
+				}
+				//remove from placeold balance localstorage.inventory
+				this.localstorage.inventory.find(item => item.type === type && item.place=== placenew).moved -= 1
+				objWithIdIndex = this.localstorage.inventory.findIndex((obj) => obj.startbalance === 0 && obj.added === 0 && obj.removed === 0 && obj.moved === 0);
+				if (objWithIdIndex > -1) {
+					this.localstorage.inventory.splice(objWithIdIndex, 1);
+				}
+				//remove from placenew balance localstorage.inventory
+				this.localstorage.inventory.find(item => item.type === type && item.place=== placeold).moved += 1
+				objWithIdIndex = this.localstorage.inventory.findIndex((obj) => obj.startbalance === 0 && obj.added === 0 && obj.removed === 0 && obj.moved === 0);
+				if (objWithIdIndex > -1) {
+					this.localstorage.inventory.splice(objWithIdIndex, 1);
+				}
+				//save to localstorage
+				localStorage.setItem('localstorage', JSON.stringify(Alpine.raw(this.localstorage)));
+				this.refreshvars ()
+				this.localstorage = JSON.parse(localStorage.getItem("localstorage"));
+		},
+		 typeENfunc (type) {
+			 switch(type){
+					case "وديعة":
+						typeEN='wadea'
+						break;
+					case "محجوزات":
+						typeEN='mahgozat'
+						break;
+					case "متروكات":
+						typeEN='matrokat'
+						break;
+					case "مضبوطات":
+						typeEN='madbotat'
+						break;
+					case "وارد جهات":
+						typeEN='waredgehat'
+						break;
+					case "متخلف":
+						typeEN='motakhalaf'
+						break;
+			}
+			return typeEN
+		 },
+			AddtoInventory(type,place,order,startbalance=0,added=0,removed=0,moved=0) {
+				this.localstorage.inventory.unshift({
+					"type": type,
+					"place": place,
+					"startbalance": startbalance,
+					"order": order,
+					"added": added,
+					"removed": removed,
+					"moved": moved
+				});
+				this.localstorage.inventory.sort((c1, c2) => (c1.order > c2.order) ? 1 : (c1.order < c2.order) ? -1 : 0);
+				this.inventory.wadea=this.localstorage.inventory.filter(item => item.type === 'وديعة')
+				this.inventory.mahgozat=this.localstorage.inventory.filter(item => item.type === 'محجوزات')
+				this.inventory.matrokat=this.localstorage.inventory.filter(item => item.type === 'متروكات')
+				this.inventory.madbotat=this.localstorage.inventory.filter(item => item.type === 'مضبوطات')
+				this.inventory.waredgehat=this.localstorage.inventory.filter(item => item.type === 'وارد جهات')
+				this.inventory.motakhalaf=this.localstorage.inventory.filter(item => item.type === 'متخلف')
+				this.refreshvars ()
+			}
+        }))
+      })
+      // PWA
+	if ('serviceWorker' in navigator) {
+	  window.addEventListener('load', () => {
+		navigator
+		  .serviceWorker
+		  .register('cache-sw.js', { scope: '/' })
+		  .then(registration => {
+			console.log('ServiceWorker registration')
+		  }, err => {
+			console.error('ServiceWorker registration failed', err)
+		  })
+	  })
+	}
+    </script>
+</body>
+</html>
